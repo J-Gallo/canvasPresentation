@@ -8,10 +8,10 @@ function drawParticles(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
 	var particles = [];
-	var cascadas = [];
+	var blueParticles = [];
 
 	var particle_count = 90;
-	var cascada_count = 200;
+	var blueParticle_count = 200;
 
 
 
@@ -21,9 +21,9 @@ function drawParticles(){
 
 	}
 
-	for(var i = 0; i < cascada_count; i++)
+	for(var i = 0; i < blueParticle_count; i++)
 	{
-		cascadas.push(new cascada());
+        blueParticles.push(new blueParticle());
 
 	}
 
@@ -46,7 +46,7 @@ function drawParticles(){
 		this.b = 0;
 	}
 
-	function cascada()
+	function blueParticle()
 	{
 
 		this.speed = {x: Math.floor(Math.random() * 10) - 5, y: Math.floor(Math.random() * 20) - 10};
@@ -111,24 +111,24 @@ function drawParticles(){
 		}
 	}
 
-	function drawCascada()
+	function drawBlueParticle()
 	{
 		ctx.globalCompositeOperation = "source-over";
 		ctx.fillStyle = "black";
 		ctx.fillRect(canvas.width/2.5, 0, canvas.width/2.5, canvas.height);
 		ctx.globalCompositeOperation = "lighter";
 
-		for(var i = 0; i < cascadas.length; i++)
+		for(var i = 0; i < blueParticles.length; i++)
 		{
-			var c = cascadas[i];
+			var c = blueParticles[i];
 			ctx.beginPath();
 			c.opacity = Math.round(c.remaining_life/c.life*100)/100
 
-			var gradientCascada = ctx.createRadialGradient(c.location.x, c.location.y, 0, c.location.x, c.location.y, c.radius);
-			gradientCascada.addColorStop(0, "rgba("+c.r+", "+c.g+", "+c.b+", "+c.opacity+")");
-			gradientCascada.addColorStop(0.5, "rgba("+c.r+", "+c.g+", "+c.b+", "+c.opacity+")");
-			gradientCascada.addColorStop(1, "rgba("+c.r+", "+c.g+", "+c.b+", 0)");
-			ctx.fillStyle = gradientCascada;
+			var blueParticleGradient = ctx.createRadialGradient(c.location.x, c.location.y, 0, c.location.x, c.location.y, c.radius);
+            blueParticleGradient.addColorStop(0, "rgba("+c.r+", "+c.g+", "+c.b+", "+c.opacity+")");
+            blueParticleGradient.addColorStop(0.5, "rgba("+c.r+", "+c.g+", "+c.b+", "+c.opacity+")");
+            blueParticleGradient.addColorStop(1, "rgba("+c.r+", "+c.g+", "+c.b+", 0)");
+			ctx.fillStyle = blueParticleGradient;
 			ctx.arc(c.location.x, c.location.y, c.radius, Math.PI*2, false);
 			ctx.fill();
 
@@ -139,12 +139,12 @@ function drawParticles(){
 
 			if(c.remaining_life < 0 || c.radius < 0)
 			{
-				cascadas[i] = new cascada();
+				blueParticles[i] = new blueParticle();
 			}
 		}
 	}
 	intervalFire = setInterval(draw, 33);
-	intervalCascada = setInterval(drawCascada, 33);
+	intervalCascada = setInterval(drawBlueParticle, 33);
 }
 
 function stopParticles() {
