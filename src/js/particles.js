@@ -65,39 +65,27 @@ function drawParticles(){
 
 	function draw()
 	{
-        //Limpiamos el canvas
 		ctx.clearRect(0, 0, canvas.width/2.5, canvas.height);
 
         for(var i = 0; i < particles.length; i++)
 		{
 			var p = particles[i];
-			//beginPath se usa para iniciar o reiniciar el el camino actual de lo que estemos dibujando
-          ctx.beginPath();
+            ctx.beginPath();
 
-			//Logica para que las particulas se vayan "desvaneciendo"
             p.opacity = Math.round(p.remaining_life/p.life*100)/100
 
-            //createRadialGradient es para crear un degrade de colores en forma circular
             var gradient = ctx.createRadialGradient(p.location.x, p.location.y, 0, p.location.x, p.location.y, p.radius);
 
-            /*
-             addColorStop sirve para realizar el cambio de color en un punto determinado de la forma circular
-             Siendo 0 el valor mas cercano al centro y 1 el mas lejano
-            */
             gradient.addColorStop(0, "rgba("+p.r+", "+p.g+", "+p.b+", "+p.opacity+")");
 			gradient.addColorStop(0.5, "rgba("+p.r+", "+p.g+", "+p.b+", "+p.opacity+")");
 			gradient.addColorStop(1, "rgba("+p.r+", "+p.g+", "+p.b+", 0)");
 
-            //fillStyle se usa para actualizar el color de la particula
             ctx.fillStyle = gradient;
 
-            //arc se utiliza para darle la forma circular a la particula
 			ctx.arc(p.location.x, p.location.y, p.radius, Math.PI*2, false);
 
-            //fill se encarga de dibujar en base a lo setteado anteriorment
             ctx.fill();
 
-            //Logica de las particulas
 			p.remaining_life--;
 			p.radius--;
 			p.location.x += p.speed.x;
